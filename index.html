@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revelación de Sexo - Invitación Especial 🍼✨</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #e0f2fe 0%, #fef3c7 50%, #fce7f3 100%);
+      min-height: 100vh;
+    }
+    .font-title {
+      font-family: 'Fredoka One', cursive;
+    }
+    /* Balloon Animation */
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      opacity: 0.6;
+      animation: floatUp 15s infinite linear;
+      z-index: 0;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+      100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+  </style>
+</head>
+<body class="relative overflow-x-hidden text-gray-800">
+
+  <!-- Background Floating Balloons -->
+  <div id="balloon-container" class="fixed inset-0 pointer-events-none overflow-hidden"></div>
+
+  <main class="relative z-10 max-w-3xl mx-auto px-4 py-8 md:py-12">
+    
+    <!-- Header Card -->
+    <header class="glass-card rounded-3xl p-6 md:p-10 text-center shadow-xl mb-8 relative">
+      <span class="inline-block bg-amber-100 text-amber-800 font-semibold px-4 py-1.5 rounded-full text-sm mb-4 border border-amber-200">
+        ✨ ¡Estás Invitado/a! ✨
+      </span>
+      <h1 class="font-title text-4xl md:text-6xl text-slate-800 mb-2 tracking-wide">
+        ¿<span class="text-sky-500">NIÑO</span> O <span class="text-pink-500">NIÑA</span>?
+      </h1>
+      <p class="text-lg md:text-xl text-gray-600 mb-6 font-medium">Únete a nuestra fiesta de Revelación de Sexo</p>
+
+      <div class="inline-flex items-center gap-2 bg-white/90 px-6 py-3 rounded-full shadow-md text-sm md:text-base text-gray-700 font-semibold">
+        <i class="fa-solid fa-heart text-pink-400"></i>
+        <span>Papás: <strong id="display-parents" class="text-slate-800">Sofía & Mateo</strong></span>
+      </div>
+    </header>
+
+    <!-- Details Grid -->
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="glass-card rounded-2xl p-6 flex items-center gap-4 shadow-md">
+        <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center text-xl shrink-0">
+          <i class="fa-regular fa-calendar-check"></i>
+        </div>
+        <div>
+          <h3 class="text-xs text-gray-500 uppercase tracking-wider font-bold">Fecha y Hora</h3>
+          <p id="display-date-time" class="font-semibold text-gray-800">Sábado, 15 de Noviembre - 4:00 PM</p>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-6 flex items-center gap-4 shadow-md">
+        <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center text-xl shrink-0">
+          <i class="fa-solid fa-location-dot"></i>
+        </div>
+        <div>
+          <h3 class="text-xs text-gray-500 uppercase tracking-wider font-bold">Lugar</h3>
+          <p id="display-location" class="font-semibold text-gray-800">Jardín de Eventos Las Rosas</p>
+          <a id="display-map-url" href="https://maps.google.com" target="_blank" class="text-xs text-sky-600 underline font-medium hover:text-sky-800">Ver mapa</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Countdown Timer -->
+    <section class="glass-card rounded-3xl p-6 text-center shadow-lg mb-8">
+      <h2 class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Faltan Solo</h2>
+      <div class="grid grid-cols-4 gap-2 md:gap-4 max-w-md mx-auto">
+        <div class="bg-white/90 rounded-2xl p-3 shadow">
+          <span id="timer-days" class="font-title text-2xl md:text-4xl text-slate-800 block">00</span>
+          <span class="text-xs text-gray-500 uppercase">Días</span>
+        </div>
+        <div class="bg-white/90 rounded-2xl p-3 shadow">
+          <span id="timer-hours" class="font-title text-2xl md:text-4xl text-slate-800 block">00</span>
+          <span class="text-xs text-gray-500 uppercase">Horas</span>
+        </div>
+        <div class="bg-white/90 rounded-2xl p-3 shadow">
+          <span id="timer-minutes" class="font-title text-2xl md:text-4xl text-slate-800 block">00</span>
+          <span class="text-xs text-gray-500 uppercase">Min</span>
+        </div>
+        <div class="bg-white/90 rounded-2xl p-3 shadow">
+          <span id="timer-seconds" class="font-title text-2xl md:text-4xl text-slate-800 block">00</span>
+          <span class="text-xs text-gray-500 uppercase">Seg</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Prediction Section -->
+    <section class="glass-card rounded-3xl p-6 md:p-8 text-center shadow-lg mb-8">
+      <h2 class="font-title text-2xl text-slate-800 mb-1">¿Cuál es tu predicción?</h2>
+      <p class="text-sm text-gray-600 mb-6">Elige una opción antes de confirmar tu asistencia</p>
+
+      <div class="grid grid-cols-2 gap-4 mb-6">
+        <button id="btn-team-boy" onclick="selectPrediction('Niño')" class="border-2 border-sky-300 hover:bg-sky-50 rounded-2xl p-4 transition-all flex flex-col items-center gap-2 group">
+          <span class="text-4xl transition-transform group-hover:scale-110">💙</span>
+          <span class="font-title text-sky-600">Equipo NIÑO</span>
+        </button>
+
+        <button id="btn-team-girl" onclick="selectPrediction('Niña')" class="border-2 border-pink-300 hover:bg-pink-50 rounded-2xl p-4 transition-all flex flex-col items-center gap-2 group">
+          <span class="text-4xl transition-transform group-hover:scale-110">💖</span>
+          <span class="font-title text-pink-600">Equipo NIÑA</span>
+        </button>
+      </div>
+
+      <!-- Voting Stats Bar -->
+      <div class="bg-gray-200 h-4 rounded-full overflow-hidden flex shadow-inner">
+        <div id="bar-boy" class="bg-sky-400 h-full transition-all duration-500" style="width: 50%"></div>
+        <div id="bar-girl" class="bg-pink-400 h-full transition-all duration-500" style="width: 50%"></div>
+      </div>
+      <div class="flex justify-between text-xs font-semibold text-gray-500 mt-2 px-1">
+        <span id="percent-boy">Niño: 50%</span>
+        <span id="percent-girl">Niña: 50%</span>
+      </div>
+    </section>
+
+    <!-- RSVP Form Container -->
+    <section class="glass-card rounded-3xl p-6 md:p-8 shadow-xl mb-12 relative overflow-hidden">
+      
+      <!-- Confirmation Form -->
+      <form id="rsvp-form" onsubmit="handleFormSubmit(event)">
+        <h2 class="font-title text-2xl text-slate-800 text-center mb-2">Confirmar Asistencia</h2>
+        <p class="text-center text-sm text-gray-600 mb-6">Por favor confirma antes de la fecha límite para preparar tu lugar.</p>
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Nombre Completo *</label>
+            <input type="text" id="guest-name" required placeholder="Ej. María García" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-400 focus:outline-none transition">
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-gray-600 uppercase mb-1">¿Asistirás? *</label>
+              <select id="guest-status" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-400 focus:outline-none transition bg-white">
+                <option value="Sí, asistiré">¡Sí, ahí estaré! 🎉</option>
+                <option value="Tal vez">Tal vez 🤔</option>
+                <option value="No podré asistir">No podré asistir 😢</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Número de Acompañantes</label>
+              <input type="number" id="guest-count" min="0" max="5" value="0" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-400 focus:outline-none transition">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Predicción de Sexo</label>
+            <input type="text" id="guest-prediction" readonly placeholder="Selecciona arriba (Niño o Niña)" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 font-semibold cursor-not-allowed">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Mensaje para los Papás (Opcional)</label>
+            <textarea id="guest-message" rows="3" placeholder="¡Escribe un lindo mensaje o deseo!" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-400 focus:outline-none transition"></textarea>
+          </div>
+
+          <button type="submit" id="submit-btn" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span>Enviar Confirmación</span>
+          </button>
+        </div>
+      </form>
+
+      <!-- In-Page Success Screen (Hidden by default) -->
+      <div id="success-screen" class="hidden text-center py-8">
+        <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 animate-bounce">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <h3 class="font-title text-3xl text-slate-800 mb-2">¡Confirmación Enviada!</h3>
+        <p class="text-gray-600 mb-6">Gracias por responder. Tus datos han sido enviados directamente al organizador.</p>
+        <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 max-w-sm mx-auto text-left text-sm text-emerald-800 mb-6">
+          <p><strong>Confirmado a nombre de:</strong> <span id="success-name"></span></p>
+          <p><strong>Respuesta:</strong> <span id="success-status"></span></p>
+          <p><strong>Predicción:</strong> <span id="success-pred"></span></p>
+        </div>
+        <button onclick="resetRSVPForm()" class="text-xs text-gray-500 hover:text-gray-800 underline">Enviar otra respuesta</button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Host Admin Floating Trigger Button -->
+  <button onclick="openAdminModal()" class="fixed bottom-4 right-4 bg-white/90 shadow-xl border border-gray-200 text-gray-700 p-3 rounded-full hover:bg-gray-100 transition z-40 text-xs font-semibold flex items-center gap-2">
+    <i class="fa-solid fa-lock text-slate-700"></i>
+    <span class="hidden md:inline">Panel Organizador</span>
+  </button>
+
+  <!-- Host Admin Modal -->
+  <div id="admin-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto shadow-2xl relative">
+      <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+
+      <!-- PIN Verification step -->
+      <div id="admin-login-step">
+        <h3 class="font-title text-xl text-slate-800 mb-4 text-center">Acceso del Organizador</h3>
+        <p class="text-xs text-gray-500 mb-4 text-center">Ingresa el PIN de seguridad (Por defecto: 1234)</p>
+        <div class="max-w-xs mx-auto space-y-3">
+          <input type="password" id="admin-pin" placeholder="PIN de acceso" class="w-full px-4 py-2 border rounded-xl text-center text-lg tracking-widest">
+          <button onclick="verifyPin()" class="w-full bg-slate-900 text-white font-bold py-2 rounded-xl">Ingresar</button>
+        </div>
+      </div>
+
+      <!-- Admin Panel Dashboard -->
+      <div id="admin-dashboard-step" class="hidden">
+        <div class="flex justify-between items-center mb-6 border-b pb-4">
+          <h3 class="font-title text-xl text-slate-800">Panel de Respuestas</h3>
+          <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-2 rounded-lg flex items-center gap-1">
+            <i class="fa-solid fa-file-excel"></i> Exportar CSV
+          </button>
+        </div>
+
+        <!-- Setting email destination -->
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-xs">
+          <label class="block font-bold text-amber-900 mb-1">Tu Correo Electrónico (para recibir notificaciones):</label>
+          <div class="flex gap-2">
+            <input type="email" id="organizer-email-input" placeholder="tu-correo@gmail.com" class="flex-grow px-3 py-2 border rounded-lg bg-white">
+            <button onclick="saveOrganizerEmail()" class="bg-amber-800 text-white px-4 py-2 rounded-lg font-bold">Guardar</button>
+          </div>
+          <p class="text-[10px] text-amber-700 mt-1">* Se enviará una notificación a este correo por cada confirmación sin salir de la invitación.</p>
+        </div>
+
+        <!-- Table of submissions -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="bg-gray-100 border-b">
+                <th class="p-2">Nombre</th>
+                <th class="p-2">Estado</th>
+                <th class="p-2">Acompañantes</th>
+                <th class="p-2">Predicción</th>
+                <th class="p-2">Mensaje</th>
+              </tr>
+            </thead>
+            <tbody id="admin-table-body" class="divide-y">
+              <!-- Dynamic rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // System Default Settings
+    const DEFAULT_EVENT_DATE = "2026-11-15T16:00:00";
+    let selectedPredictionValue = "";
+    let organizerEmail = localStorage.getItem('organizer_email') || 'tu-correo@ejemplo.com';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initBalloons();
+      startTimer(DEFAULT_EVENT_DATE);
+      updateVoteStats();
+      document.getElementById('organizer-email-input').value = organizerEmail;
+    });
+
+    // Background Balloons Generator
+    function initBalloons() {
+      const container = document.getElementById('balloon-container');
+      const colors = ['#bfdbfe', '#fbcfe8', '#fef08a'];
+      for (let i = 0; i < 12; i++) {
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        balloon.style.left = `${Math.random() * 100}%`;
+        balloon.style.animationDelay = `${Math.random() * 10}s`;
+        balloon.style.animationDuration = `${10 + Math.random() * 10}s`;
+        
+        const size = 30 + Math.random() * 20;
+        balloon.style.width = `${size}px`;
+        balloon.style.height = `${size * 1.2}px`;
+        balloon.style.borderRadius = '50%';
+        balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        container.appendChild(balloon);
+      }
+    }
+
+    // Timer Countdown
+    function startTimer(targetDateStr) {
+      const targetDate = new Date(targetDateStr).getTime();
+      setInterval(() => {
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+
+        if (diff > 0) {
+          document.getElementById('timer-days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+          document.getElementById('timer-hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+          document.getElementById('timer-minutes').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+          document.getElementById('timer-seconds').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+        }
+      }, 1000);
+    }
+
+    // Prediction Voting Handler
+    function selectPrediction(type) {
+      selectedPredictionValue = type;
+      document.getElementById('guest-prediction').value = `Equipo ${type}`;
+      
+      const btnBoy = document.getElementById('btn-team-boy');
+      const btnGirl = document.getElementById('btn-team-girl');
+
+      if (type === 'Niño') {
+        btnBoy.classList.add('bg-sky-100', 'ring-4', 'ring-sky-300');
+        btnGirl.classList.remove('bg-pink-100', 'ring-4', 'ring-pink-300');
+      } else {
+        btnGirl.classList.add('bg-pink-100', 'ring-4', 'ring-pink-300');
+        btnBoy.classList.remove('bg-sky-100', 'ring-4', 'ring-sky-300');
+      }
+    }
+
+    // Update Percentage Bar
+    function updateVoteStats() {
+      const list = JSON.parse(localStorage.getItem('rsvp_submissions') || '[]');
+      let boyCount = list.filter(i => i.prediction.includes('Niño')).length;
+      let girlCount = list.filter(i => i.prediction.includes('Niña')).length;
+      
+      let total = boyCount + girlCount;
+      let boyPercent = total === 0 ? 50 : Math.round((boyCount / total) * 100);
+      let girlPercent = total === 0 ? 50 : 100 - boyPercent;
+
+      document.getElementById('bar-boy').style.width = `${boyPercent}%`;
+      document.getElementById('bar-girl').style.width = `${girlPercent}%`;
+      document.getElementById('percent-boy').innerText = `Niño: ${boyPercent}%`;
+      document.getElementById('percent-girl').innerText = `Niña: ${girlPercent}%`;
+    }
+
+    // Handle Form Submit via AJAX (Background)
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Enviando...</span>`;
+
+      const payload = {
+        nombre: document.getElementById('guest-name').value,
+        estado: document.getElementById('guest-status').value,
+        acompanantes: document.getElementById('guest-count').value,
+        prediccion: selectedPredictionValue || 'Sin elección',
+        mensaje: document.getElementById('guest-message').value,
+        fecha_registro: new Date().toLocaleString()
+      };
+
+      // 1. Save locally for Host Dashboard / Panel
+      let submissions = JSON.parse(localStorage.getItem('rsvp_submissions') || '[]');
+      submissions.push({
+        name: payload.nombre,
+        status: payload.estado,
+        guests: payload.acompanantes,
+        prediction: payload.prediccion,
+        message: payload.mensaje,
+        date: payload.fecha_registro
+      });
+      localStorage.setItem('rsvp_submissions', JSON.stringify(submissions));
+
+      // 2. Background AJAX call to FormSubmit (Sends direct notification to organizer's email)
+      if (organizerEmail && organizerEmail.includes('@') && !organizerEmail.includes('ejemplo.com')) {
+        try {
+          await fetch(`https://formsubmit.co/ajax/${organizerEmail}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              _subject: `Nueva Confirmación Gender Reveal: ${payload.nombre}`,
+              Invitado: payload.nombre,
+              Asistira: payload.estado,
+              Acompanantes: payload.acompanantes,
+              Prediccion: payload.prediccion,
+              Mensaje: payload.mensaje
+            })
+          });
+        } catch (err) {
+          console.warn('Notification error (data saved locally):', err);
+        }
+      }
+
+      // 3. Trigger Confetti
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+
+      // 4. Swap to Success Screen
+      document.getElementById('rsvp-form').classList.add('hidden');
+      document.getElementById('success-name').innerText = payload.nombre;
+      document.getElementById('success-status').innerText = payload.estado;
+      document.getElementById('success-pred').innerText = payload.prediccion;
+      document.getElementById('success-screen').classList.remove('hidden');
+
+      updateVoteStats();
+    }
+
+    function resetRSVPForm() {
+      document.getElementById('rsvp-form').reset();
+      document.getElementById('rsvp-form').classList.remove('hidden');
+      document.getElementById('success-screen').classList.add('hidden');
+      document.getElementById('submit-btn').disabled = false;
+      document.getElementById('submit-btn').innerHTML = `<i class="fa-solid fa-paper-plane"></i> <span>Enviar Confirmación</span>`;
+    }
+
+    // Host Admin Panel Logic
+    function openAdminModal() {
+      document.getElementById('admin-modal').classList.remove('hidden');
+      document.getElementById('admin-modal').classList.add('flex');
+    }
+
+    function closeAdminModal() {
+      document.getElementById('admin-modal').classList.add('hidden');
+      document.getElementById('admin-modal').classList.remove('flex');
+    }
+
+    function verifyPin() {
+      const pin = document.getElementById('admin-pin').value;
+      if (pin === '1234') {
+        document.getElementById('admin-login-step').classList.add('hidden');
+        document.getElementById('admin-dashboard-step').classList.remove('hidden');
+        renderAdminTable();
+      } else {
+        alert('PIN incorrecto. El PIN por defecto es 1234');
+      }
+    }
+
+    function saveOrganizerEmail() {
+      const mail = document.getElementById('organizer-email-input').value;
+      if (mail && mail.includes('@')) {
+        organizerEmail = mail;
+        localStorage.setItem('organizer_email', mail);
+        alert('Correo guardado con éxito. Ahora recibirás las notificaciones aquí.');
+      } else {
+        alert('Por favor ingresa un correo válido.');
+      }
+    }
+
+    function renderAdminTable() {
+      const tbody = document.getElementById('admin-table-body');
+      const list = JSON.parse(localStorage.getItem('rsvp_submissions') || '[]');
+      
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-400">No hay confirmaciones registradas aún.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = list.map(i => `
+        <tr>
+          <td class="p-2 font-medium">${i.name}</td>
+          <td class="p-2">${i.status}</td>
+          <td class="p-2">${i.guests}</td>
+          <td class="p-2">${i.prediction}</td>
+          <td class="p-2 text-gray-500">${i.message || '-'}</td>
+        </tr>
+      `).join('');
+    }
+
+    function exportToCSV() {
+      const list = JSON.parse(localStorage.getItem('rsvp_submissions') || '[]');
+      if (list.length === 0) return alert('No hay datos para exportar.');
+
+      let csv = 'Nombre,Estado,Acompañantes,Predicción,Mensaje,Fecha\n';
+      list.forEach(r => {
+        csv += `"${r.name}","${r.status}","${r.guests}","${r.prediction}","${r.message}","${r.date}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Confirmaciones_Gender_Reveal.csv`;
+      a.click();
+    }
+  </script>
+</body>
+</html>
